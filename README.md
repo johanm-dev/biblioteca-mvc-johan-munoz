@@ -24,7 +24,7 @@ Aplicación web desarrollada en **Laravel 12** aplicando el patrón arquitectón
 
 1. Clonar el repositorio y entrar a la carpeta del proyecto:
    ```bash
-   git clone https://github.com/TU-USUARIO/biblioteca-mvc-johan-munoz.git
+   git clone https://github.com/johanm-dev/biblioteca-mvc-johan-munoz.git
    cd biblioteca-mvc-johan-munoz
    ```
 
