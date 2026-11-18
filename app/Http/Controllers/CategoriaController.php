@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoriaRequest;
 use App\Models\Categoria;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CategoriaController extends Controller
@@ -28,15 +28,11 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Almacena una nueva categoría en la base de datos.
+     * Almacena una nueva categoría validada por CategoriaRequest.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(CategoriaRequest $request): RedirectResponse
     {
-        $datos = $request->validate([
-            'nombre' => ['required', 'string', 'min:3', 'max:100', 'unique:categorias,nombre'],
-        ]);
-
-        Categoria::create($datos);
+        Categoria::create($request->validated());
 
         return redirect()
             ->route('categorias.index')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LibroRequest;
 use App\Models\Categoria;
 use App\Models\Libro;
 use Illuminate\Http\RedirectResponse;
@@ -11,14 +12,20 @@ use Illuminate\View\View;
 class LibroController extends Controller
 {
     /**
-     * Muestra el listado de libros con su categoría.
+     * Muestra el listado de libros con filtro por categoría, búsqueda por título y paginación.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $libros = Libro::with('categoria')->latest('id')->get();
+        $categoriaId = $request->integer('categoria_id') ?: null;
+        $busqueda = $request->string('buscar')->trim()->toString();
+
+        $libros = Libro::catalogo($categoriaId, $busqueda)
+            ->paginate(8)
+            ->withQueryString();
+
         $categorias = Categoria::ordenadas()->get();
 
-        return view('libros.index', compact('libros', 'categorias'));
+        return view('libros.index', compact('libros', 'categorias', 'categoriaId', 'busqueda'));
     }
 
     /**
@@ -32,19 +39,11 @@ class LibroController extends Controller
     }
 
     /**
-     * Guarda un nuevo libro en la base de datos.
+     * Guarda un nuevo libro previamente validado por LibroRequest.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(LibroRequest $request): RedirectResponse
     {
-        $datos = $request->validate([
-            'titulo' => ['required', 'string', 'min:3', 'max:150'],
-            'autor' => ['required', 'string', 'min:2', 'max:120'],
-            'anio' => ['required', 'integer', 'min:1500', 'max:' . date('Y')],
-            'categoria_id' => ['required', 'exists:categorias,id'],
-            'disponible' => ['required', 'boolean'],
-        ]);
-
-        Libro::create($datos);
+        Libro::create($request->validated());
 
         return redirect()
             ->route('libros.index')
@@ -62,19 +61,11 @@ class LibroController extends Controller
     }
 
     /**
-     * Actualiza los datos de un libro existente.
+     * Actualiza los datos de un libro existente tras validar con LibroRequest.
      */
-    public function update(Request $request, Libro $libro): RedirectResponse
+    public function update(LibroRequest $request, Libro $libro): RedirectResponse
     {
-        $datos = $request->validate([
-            'titulo' => ['required', 'string', 'min:3', 'max:150'],
-            'autor' => ['required', 'string', 'min:2', 'max:120'],
-            'anio' => ['required', 'integer', 'min:1500', 'max:' . date('Y')],
-            'categoria_id' => ['required', 'exists:categorias,id'],
-            'disponible' => ['required', 'boolean'],
-        ]);
-
-        $libro->update($datos);
+        $libro->update($request->validated());
 
         return redirect()
             ->route('libros.index')

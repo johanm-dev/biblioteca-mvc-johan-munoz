@@ -6,9 +6,43 @@
     <div class="page-head">
         <div>
             <h2 class="page-title">Catálogo de Mitologías Colombianas</h2>
-            <p class="page-subtitle">Explora, registra, actualiza y organiza los libros de tu biblioteca.</p>
+            <p class="page-subtitle">Explora, filtra, busca y administra los libros de tu biblioteca personal.</p>
         </div>
         <a href="{{ route('libros.create') }}" class="btn btn-primary">+ Registrar libro</a>
+    </div>
+
+    <div class="card">
+        <form action="{{ route('libros.index') }}" method="GET" class="filter-form">
+            <div>
+                <label for="buscar">Buscar por título</label>
+                <input type="text"
+                       id="buscar"
+                       name="buscar"
+                       value="{{ $busqueda }}"
+                       class="form-control"
+                       placeholder="Ej. Bachué, Madremonte, Yuruparí...">
+            </div>
+
+            <div>
+                <label for="categoria_id">Filtrar por categoría</label>
+                <select id="categoria_id" name="categoria_id" class="form-control">
+                    <option value="">Todas las categorías</option>
+                    @foreach ($categorias as $categoria)
+                        <option value="{{ $categoria->id }}"
+                            {{ (int) $categoriaId === $categoria->id ? 'selected' : '' }}>
+                            {{ $categoria->nombre }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="filter-actions">
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+                @if ($categoriaId || $busqueda !== '')
+                    <a href="{{ route('libros.index') }}" class="btn btn-secondary">Limpiar</a>
+                @endif
+            </div>
+        </form>
     </div>
 
     <div class="card">
@@ -58,12 +92,14 @@
                     @empty
                         <tr>
                             <td colspan="6" class="empty-state">
-                                No hay libros registrados todavía en el catálogo.
+                                No se encontraron libros con los criterios seleccionados.
                             </td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
+
+        {{ $libros->links('partials.paginacion') }}
     </div>
 @endsection
