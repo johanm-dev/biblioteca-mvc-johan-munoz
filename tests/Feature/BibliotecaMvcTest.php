@@ -21,7 +21,7 @@ class BibliotecaMvcTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('Biblioteca de Johan');
-        $response->assertSee('Johan Smith Muñoz Castiblanco · Ficha 3478025 · 2026');
+        $response->assertSee('Johan Smith Muñoz Castiblanco · Ficha 3478023 · 2026');
         $response->assertSee('Cosmogonía de la Sierra Nevada');
         $response->assertSee('Los hijos de la Madre Tierra: mitos kogui');
     }

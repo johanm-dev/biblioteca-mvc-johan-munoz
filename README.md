@@ -4,7 +4,7 @@ Aplicación web desarrollada en **Laravel 12** aplicando el patrón arquitectón
 
 - **Aprendiz:** Johan Smith Muñoz Castiblanco
 - **Programa:** Análisis y Desarrollo de Software (ADSO) — SENA
-- **Ficha:** 3478025
+- **Ficha:** 3478023
 - **Base de datos:** PostgreSQL (`biblioteca_johan_munoz`)
 
 ## Arquitectura MVC del proyecto

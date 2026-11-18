@@ -47,7 +47,7 @@
     </main>
 
     <footer class="site-footer">
-        Johan Smith Muñoz Castiblanco · Ficha 3478025 · 2026
+        Johan Smith Muñoz Castiblanco · Ficha 3478023 · 2026
     </footer>
 </body>
 </html>

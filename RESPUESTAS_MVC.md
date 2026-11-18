@@ -1,7 +1,7 @@
 # Respuestas de entrega y autoevaluación MVC
 
 - **Aprendiz:** Johan Smith Muñoz Castiblanco
-- **Programa:** Análisis y Desarrollo de Software (ADSO) · Ficha `3478025`
+- **Programa:** Análisis y Desarrollo de Software (ADSO) · Ficha `3478023`
 - **Proyecto:** Biblioteca de Johan (Mitologías Colombianas)
 
 ---
